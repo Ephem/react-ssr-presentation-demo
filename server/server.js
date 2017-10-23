@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom/server';
 
 import webpackStats from '../public/generated/stats.json';
 
-import { ServerRoot } from '../public/generated/server';
+import { ServerRoot as GeneratedServerRoot } from '../public/generated/server';
 
 const isLocal = process.env.NODE_ENV === 'local';
 
@@ -25,6 +25,12 @@ function startServerInstance() {
     app.use('/public', express.static('public'));
 
     app.use('/', (req, res, next) => {
+        let ServerRoot = GeneratedServerRoot;
+        if (isLocal) {
+            delete require.cache[require.resolve('../public/generated/server')];
+            ServerRoot = require('../public/generated/server').ServerRoot;
+        }
+
         const ctx = {};
         const pageProps = {
             title: 'React SSR Demo (SSR)',

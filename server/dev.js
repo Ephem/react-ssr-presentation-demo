@@ -9,10 +9,30 @@ const createWebpackConf = require('../webpack.config.babel').createWebpackConf;
 const clientCompiler = webpack(createWebpackConf());
 const serverCompiler = webpack(createWebpackConf({ isServer: true }));
 
-clientCompiler.plugin('done', () => {
-    serverCompiler.run(() => {
+let hasStartedServer = false;
+let serverCompile = false;
+let clientCompile = false;
+
+console.log('Webpack is watching server');
+serverCompiler.watch({
+    aggregateTimeout: 300,
+    poll: true
+}, () => {
+    serverCompile = true;
+    if (!hasStartedServer && clientCompile) {
+        hasStartedServer = true;
         require('./server');
-    });
+    }
+    console.log('Webpack compiled new server-code');
+});
+
+clientCompiler.plugin('done', () => {
+    clientCompile = true;
+    if (!hasStartedServer && serverCompile) {
+        hasStartedServer = true;
+        require('./server');
+    }
+    console.log('Webpack compiled new client-code');
 });
 
 const webpackDevServer = new WebpackDevServer(clientCompiler, {

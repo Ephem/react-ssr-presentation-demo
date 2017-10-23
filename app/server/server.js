@@ -1,8 +1,12 @@
 import path from 'path';
 import express from 'express';
 import httpProxy from 'http-proxy-middleware';
+import React from 'react';
+import ReactDOM from 'react-dom/server';
 
 import webpackStats from '../../public/generated/stats.json';
+
+import ServerRoot from '../ServerRoot';
 
 const isLocal = process.env.NODE_ENV === 'local';
 
@@ -21,8 +25,10 @@ function startServerInstance() {
     app.use('/public', express.static('public'));
 
     app.use('/', (req, res, next) => {
+        const ctx = {};
         const pageProps = {
-            title: 'React SSR Demo (Client)',
+            title: 'React SSR Demo (SSR)',
+            markup: ReactDOM.renderToString(<ServerRoot req={req} ctx={ctx} />),
             assetPaths: {
                 applicationCss: webpackStats['application.css'],
                 applicationJs: webpackStats['application.js']

@@ -8,7 +8,7 @@ import css from './app.css';
 const Nav = () => (
     <div>
         <div className={css.nav}>
-            <div className={css.navHeader}>SSR Demo (Client)</div>
+            <div className={css.navHeader}>SSR Demo (SSR)</div>
         </div>
         <div className={css.subNav}>
             <NavLink

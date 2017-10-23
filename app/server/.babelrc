@@ -8,6 +8,13 @@
                 "node": "current"
             }
         }],
+        "react",
         "stage-2"
+    ],
+    "plugins": [
+        ["css-modules-transform", {
+            "extensions": [".css"],
+            "generateScopedName": "[name]__[local]___[hash:base64:5]"
+        }]
     ]
 }

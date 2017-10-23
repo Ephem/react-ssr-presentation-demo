@@ -17,7 +17,7 @@ const cssLoader = {
 export function createWebpackClientConf() {
     const webpackConfig = {
         entry: {
-            application: ['./app/appEntry.js']
+            application: ['./app/clientEntry.js']
         },
         output: {
             path: resolve(__dirname, 'public/generated/'),

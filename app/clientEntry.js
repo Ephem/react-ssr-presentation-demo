@@ -6,7 +6,7 @@ import App from './App';
 
 function initReact() {
     function render(Component) {
-        ReactDOM.render(
+        ReactDOM.hydrate(
             <Router>
                 <Component />
             </Router>,

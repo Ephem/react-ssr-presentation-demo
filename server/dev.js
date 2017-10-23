@@ -4,12 +4,15 @@ const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const resolve = require('path').resolve;
 
-const webpackClientConfig = require('../../webpack.config.babel').default;
+const createWebpackConf = require('../webpack.config.babel').createWebpackConf;
 
-const clientCompiler = webpack(webpackClientConfig);
+const clientCompiler = webpack(createWebpackConf());
+const serverCompiler = webpack(createWebpackConf({ isServer: true }));
 
 clientCompiler.plugin('done', () => {
-    require('./server');
+    serverCompiler.run(() => {
+        require('./server');
+    });
 });
 
 const webpackDevServer = new WebpackDevServer(clientCompiler, {

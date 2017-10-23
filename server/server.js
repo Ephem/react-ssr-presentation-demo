@@ -4,15 +4,15 @@ import httpProxy from 'http-proxy-middleware';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 
-import webpackStats from '../../public/generated/stats.json';
+import webpackStats from '../public/generated/stats.json';
 
-import ServerRoot from '../ServerRoot';
+import { ServerRoot } from '../public/generated/server';
 
 const isLocal = process.env.NODE_ENV === 'local';
 
 function startServerInstance() {
     const app = express();
-    app.set('views', 'app/server/views');
+    app.set('views', 'server/views');
 
     app.get('/favicon.ico', function(req, res) {
         return res.status(204);
@@ -28,7 +28,7 @@ function startServerInstance() {
         const ctx = {};
         const pageProps = {
             title: 'React SSR Demo (SSR)',
-            markup: ReactDOM.renderToString(<ServerRoot req={req} ctx={ctx} />),
+            markup: ReactDOM.renderToString(React.createElement(ServerRoot, { ctx, req })),
             assetPaths: {
                 applicationCss: webpackStats['application.css'],
                 applicationJs: webpackStats['application.js']

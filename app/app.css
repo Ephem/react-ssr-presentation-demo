@@ -1,0 +1,90 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    min-height: 100%;
+    background-color: #e6ebeb;
+}
+
+.mainContainer {
+    padding: 20px;
+}
+
+.nav {
+    background-color: #87d7cd;
+    padding: 30px;
+}
+
+.subNav {
+    display: inline-block;
+}
+
+.subNavLink {
+    background-color: #2d9b91;
+    display: inline-block;
+    color: #ffffff;
+    padding: 15px 20px;
+    text-decoration: none;
+}
+
+.subNavLinkActive {
+    background-color: #87d7cd;
+    color: #000000;
+    text-decoration: underline;
+}
+
+.navHeader {
+    font-size: 2em;
+    font-family: Arial, sans-serif;
+    line-height: 1;
+}
+
+.expandableSectionHeader {
+    display: block;
+    background-color: #82c882;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.expandableSection {
+    margin: 20px 0;
+}
+
+.expandableSectionBody {
+    padding: 20px;
+    background-color: #d2ebd2;
+}
+
+.expandableSectionBodyOpen {
+    composes: expandableSectionBody;
+    display: block;
+}
+
+.expandableSectionBodyClosed {
+    composes: expandableSectionBody;
+    display: none;
+}
+
+.catButtonContainer {
+    display: flex;
+    margin-bottom: 10px;
+}
+.catButton {
+    flex-grow: 1;
+    display: inline-block;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+.catButton:active {
+    outline: none;
+}
+.catContainer img {
+    width: 100%;
+}

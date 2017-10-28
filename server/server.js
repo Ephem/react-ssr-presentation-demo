@@ -3,10 +3,11 @@ import express from 'express';
 import httpProxy from 'http-proxy-middleware';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
+import { createStore } from 'redux';
 
 import webpackStats from '../public/generated/stats.json';
 
-import { ServerRoot as GeneratedServerRoot } from '../public/generated/server';
+const GeneratedServerApp = require('../public/generated/server');
 
 const isLocal = process.env.NODE_ENV === 'local';
 
@@ -25,16 +26,18 @@ function startServerInstance() {
     app.use('/public', express.static('public'));
 
     app.use('/', (req, res, next) => {
-        let ServerRoot = GeneratedServerRoot;
+        let ServerApp = GeneratedServerApp;
         if (isLocal) {
             delete require.cache[require.resolve('../public/generated/server')];
-            ServerRoot = require('../public/generated/server').ServerRoot;
+            ServerApp = require('../public/generated/server');
         }
+
+        const store = createStore(ServerApp.topReducer);
 
         const ctx = {};
         const pageProps = {
             title: 'React SSR Demo (SSR)',
-            markup: ReactDOM.renderToString(React.createElement(ServerRoot, { ctx, req })),
+            markup: ReactDOM.renderToString(React.createElement(ServerApp.ServerRoot, { ctx, req, store })),
             assetPaths: {
                 applicationCss: webpackStats['application.css'],
                 applicationJs: webpackStats['application.js']

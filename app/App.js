@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink, Route } from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import { selectIsOpen, setExpandableAction } from './expandablesModule';
 import Spinner from './Spinner';
 import normalize from './normalize.css';
 import css from './app.css';
@@ -24,23 +26,28 @@ const Nav = () => (
     </div>
 );
 
-class ExpandableSection extends React.Component {
-    state = { isOpen: false }
+class ExpandableSectionDumb extends React.Component {
     render() {
         return (
             <div className={css.expandableSection}>
                 <button
                     className={css.expandableSectionHeader}
-                    onClick={() => this.setState({ isOpen: !this.state.isOpen })}>
-                    Click this header to {this.state.isOpen ? 'close' : 'open'}
+                    onClick={() => this.props.dispatch(setExpandableAction({
+                        name: this.props.name,
+                        isOpen: !this.props.isOpen
+                    }))}
+                >
+                    Click this header to {this.props.isOpen ? 'close' : 'open'}
                 </button>
-                <div className={this.state.isOpen ? css.expandableSectionBodyOpen : css.expandableSectionBodyClosed}>
-                    {this.state.isOpen && this.props.children}
+                <div className={this.props.isOpen ? css.expandableSectionBodyOpen : css.expandableSectionBodyClosed}>
+                    {this.props.isOpen && this.props.children}
                 </div>
             </div>
         );
     }
 }
+
+const ExpandableSection = connect(selectIsOpen)(ExpandableSectionDumb);
 
 class CatsPage extends React.Component {
     state = { cat: null }
@@ -85,10 +92,10 @@ class CatsPage extends React.Component {
 };
 
 const ExpandableSectionsPage = () => ([
-    <ExpandableSection key="1">
+    <ExpandableSection key="1" name="1">
         First section is expanded!
     </ExpandableSection>,
-    <ExpandableSection key="2">
+    <ExpandableSection key="2" name="2">
         Second section is expanded!
     </ExpandableSection>
 ]);

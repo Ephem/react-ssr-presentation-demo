@@ -1,15 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
+import topReducer from './topReducer';
 import App from './App';
 
 function initReact() {
+    const store = createStore(topReducer);
+
     function render(Component) {
         ReactDOM.hydrate(
-            <Router>
-                <Component />
-            </Router>,
+            <Provider store={store}>
+                <Router>
+                    <Component />
+                </Router>
+            </Provider>,
             document.getElementById('react-app-root')
         );
     }

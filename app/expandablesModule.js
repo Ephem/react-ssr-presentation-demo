@@ -28,5 +28,9 @@ export const setExpandableAction = ({ name, isOpen }) => ({
     payload: {
         name,
         isOpen
+    },
+    metadata: {
+        queryKey: 'expandable_' + name,
+        queryValue: isOpen ? '1' : '0'
     }
 });

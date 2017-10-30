@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { selectIsOpen, setExpandableAction } from './expandablesModule';
 import { selectForCatsPage, getCatAction } from './catsModule';
 import Spinner from './Spinner';
+import Link from './Link';
 import normalize from './normalize.css';
 import css from './app.css';
 
@@ -31,15 +32,15 @@ class ExpandableSectionDumb extends React.Component {
     render() {
         return (
             <div className={css.expandableSection}>
-                <button
+                <Link
                     className={css.expandableSectionHeader}
-                    onClick={() => this.props.dispatch(setExpandableAction({
+                    action={setExpandableAction({
                         name: this.props.name,
                         isOpen: !this.props.isOpen
-                    }))}
+                    })}
                 >
                     Click this header to {this.props.isOpen ? 'close' : 'open'}
-                </button>
+                </Link>
                 <div className={this.props.isOpen ? css.expandableSectionBodyOpen : css.expandableSectionBodyClosed}>
                     {this.props.isOpen && this.props.children}
                 </div>

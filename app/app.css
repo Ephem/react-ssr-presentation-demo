@@ -51,6 +51,11 @@ html, body {
     width: 100%;
     padding: 10px;
     cursor: pointer;
+    text-decoration: none;
+    font-family: sans-serif;
+    color: #000000;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .expandableSection {

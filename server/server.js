@@ -5,8 +5,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/server';
 import { createStore } from 'redux';
 
-import webpackStats from '../public/generated/stats.json';
+import getActionsFromQuery from './getActionsFromQuery';
 
+import webpackStats from '../public/generated/stats.json';
 const GeneratedServerApp = require('../public/generated/server');
 
 const isLocal = process.env.NODE_ENV === 'local';
@@ -33,6 +34,9 @@ function startServerInstance() {
         }
 
         const store = createStore(ServerApp.topReducer);
+
+        const actions = getActionsFromQuery(req, ServerApp);
+        actions.forEach(store.dispatch);
 
         const ctx = {};
         const pageProps = {

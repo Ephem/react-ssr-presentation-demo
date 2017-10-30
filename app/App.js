@@ -3,6 +3,7 @@ import { NavLink, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { selectIsOpen, setExpandableAction } from './expandablesModule';
+import { selectForCatsPage, getCatAction } from './catsModule';
 import Spinner from './Spinner';
 import normalize from './normalize.css';
 import css from './app.css';
@@ -49,24 +50,17 @@ class ExpandableSectionDumb extends React.Component {
 
 const ExpandableSection = connect(selectIsOpen)(ExpandableSectionDumb);
 
-class CatsPage extends React.Component {
-    state = { cat: null }
+class CatsPageDumb extends React.Component {
     componentDidMount() {
-        if (this.state.cat === null) {
+        if (this.props.cat === null) {
             this.getNewCat();
         }
     }
     getNewCat(category) {
-        fetch(`https://thecatapi.com/api/images/get?format=html&type=gif${category ? `&category=${category}` : ''}`)
-            .then((res) => res.text())
-            .then((text) => {
-                this.setState({
-                    cat: text
-                });
-            });
+        this.props.dispatch(getCatAction(category));
     }
     render() {
-        if (!this.state.cat) {
+        if (!this.props.cat) {
             return <Spinner />;
         }
 
@@ -85,11 +79,13 @@ class CatsPage extends React.Component {
                 </div>
                 <div
                     className={css.catContainer}
-                    dangerouslySetInnerHTML={{ __html: this.state.cat }} />
+                    dangerouslySetInnerHTML={{ __html: this.props.cat }} />
             </div>
         );
     }
 };
+
+const CatsPage = connect(selectForCatsPage)(CatsPageDumb);
 
 const ExpandableSectionsPage = () => ([
     <ExpandableSection key="1" name="1">

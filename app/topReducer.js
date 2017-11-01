@@ -11,7 +11,7 @@ export const asyncMiddleware = (store) => (next) => (action) => {
         case CAT_ACTIONS.GET_CAT: {
             const category = action.payload.category;
 
-            fetch(`https://thecatapi.com/api/images/get?format=html&type=gif${category ? `&category=${category}` : ''}`)
+            return fetch(`https://thecatapi.com/api/images/get?format=html&type=gif${category ? `&category=${category}` : ''}`)
                 .then((res) => res.text())
                 .then((text) => {
                     store.dispatch(gotCatAction(text));

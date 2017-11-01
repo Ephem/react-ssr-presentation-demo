@@ -86,6 +86,14 @@ html, body {
     display: inline-block;
     border: 1px solid #000;
     cursor: pointer;
+    text-decoration: none;
+    font-family: sans-serif;
+    color: #000000;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    padding: 1px 1px 2px 1px;
+    border-radius: 4px;
 }
 .catButton:active {
     outline: none;

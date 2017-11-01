@@ -24,18 +24,27 @@ export const selectForCatsPage = (state, props) => ({
 
 // This is how you could use redux-thunk for the getCat-action:
 /* export const getCatAction = (category) => {
-    return (dispatch) => {
+    const action = (dispatch) => {
         fetch(`https://thecatapi.com/api/images/get?format=html&type=gif${category ? `&category=${category}` : ''}`)
             .then((res) => res.text())
             .then((text) => {
                 dispatch(gotCatAction(text));
             });
     };
+    action.metadata = {
+        queryKey: 'category',
+        queryValue: category || ''
+    };
+    return action;
 }; */
 
 export const getCatAction = (category) => ({
     type: ACTION_TYPES.GET_CAT,
-    payload: { category }
+    payload: { category },
+    metadata: {
+        queryKey: 'category',
+        queryValue: category || ''
+    }
 });
 
 export function gotCatAction(cat) {

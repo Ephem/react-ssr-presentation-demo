@@ -10,6 +10,7 @@ import App from './App';
 function initReact() {
     const store = createStore(
         topReducer,
+        window.storeData,
         applyMiddleware(asyncMiddleware)
     );
 

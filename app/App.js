@@ -54,11 +54,8 @@ const ExpandableSection = connect(selectIsOpen)(ExpandableSectionDumb);
 class CatsPageDumb extends React.Component {
     componentDidMount() {
         if (this.props.cat === null) {
-            this.getNewCat();
+            this.props.dispatch(getCatAction());
         }
-    }
-    getNewCat(category) {
-        this.props.dispatch(getCatAction(category));
     }
     render() {
         if (!this.props.cat) {
@@ -68,15 +65,15 @@ class CatsPageDumb extends React.Component {
         return (
             <div>
                 <div className={css.catButtonContainer}>
-                    <button
+                    <Link
                         className={css.catButton}
-                        onClick={() => this.getNewCat()}>Random cat</button>
-                    <button
+                        action={getCatAction()}>Random cat</Link>
+                    <Link
                         className={css.catButton}
-                        onClick={() => this.getNewCat('hats')}>Cat with hat</button>
-                    <button
+                        action={getCatAction('hats')}>Cat with hat</Link>
+                    <Link
                         className={css.catButton}
-                        onClick={() => this.getNewCat('space')}>Cat in space</button>
+                        action={getCatAction('space')}>Cat in space</Link>
                 </div>
                 <div
                     className={css.catContainer}
